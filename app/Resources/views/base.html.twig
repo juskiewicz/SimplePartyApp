@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% block stylesheets %}
+        <link href="{{ asset('build/css/library.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('build/css/app.css') }}" rel="stylesheet" type="text/css">
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="{{ asset('build/js/library.js') }}"></script>
+        <script src="{{ asset('build/js/app.js') }}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoEKsuaOwLqV3Smziwsa_OIjkuLsxOAds"></script>
+    {% endblock %}
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-dark navbar-expand-md sticky-top bg-dark p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0"
+           href="{{ path('test_index') }}">Test App</a>
+        <div class="w-100 order-1 order-md-0">
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="{{ path('test_add') }}">Dodaj wydarzenie</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </main>
+</body>
+</html>

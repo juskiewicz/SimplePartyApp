@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="media text-muted mb-3">
+        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <span class="d-block">
+                <small>{{  party.email }} · {{ party.fromAt|date("d/m/Y") }} - {{ party.toAt|date("d/m/Y") }}</small>
+            </span>
+            <strong>{{ party.name }}</strong><br />
+            {{ party.description }}<br />
+            {{ party.address }}
+        </p>
+    </div>
+    <div id="map" class="col-md-12 mb-3"></div>
+    <a href="{{ path('test_index') }}" class="btn btn-primary btn-sm">powrót</a>
+
+
+    <script>
+        function initMap() {
+            var location = new google.maps.LatLng({{ party.point.latitude }}, {{ party.point.longitude }});
+
+            var mapCanvas = document.getElementById('map');
+            var mapOptions = {
+                center: location,
+                zoom: 16,
+                panControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+
+            var contentString = '<div class="info-window">' +
+                '<h3>{{ party.name }}</h3>' +
+                '<div class="info-content">' +
+                '<p>{{ party.description }}</p>' +
+                '<p>{{ party.address }}</p>' +
+                '</div>' +
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 400
+            });
+
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+{% endblock %}
